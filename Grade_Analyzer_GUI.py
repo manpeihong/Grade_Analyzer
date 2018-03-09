@@ -2,6 +2,8 @@ from tkinter import *
 from tkinter import filedialog, messagebox
 import csv
 import matplotlib
+import sys
+import os
 
 matplotlib.use("TkAgg")
 # import matplotlib.pyplot as plt
@@ -15,7 +17,7 @@ import configparser
 from ColorTheme import color_theme
 import cross_platform_config
 
-__version__ = '1.50'
+__version__ = '1.51'
 
 
 class GradeAnalyzer_GUI(Frame):
@@ -746,6 +748,7 @@ class GradeAnalyzer_GUI(Frame):
 
 
 def main():
+    os.chdir(os.path.dirname(os.path.realpath(sys.argv[0])))   # Change the working directory to current directory.
     config = configparser.ConfigParser()
     config.read('configuration.ini')
     config_theme = config["Settings"]["colortheme"]
