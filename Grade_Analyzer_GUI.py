@@ -34,7 +34,7 @@ class GradeAnalyzer_GUI(Frame):
                             'cyan', 'magenta',
                             'cyan', 'black']
 
-        self.year = 2017
+        self.year = 2018
         self.phyclass = 'Phys106'
         self.numberofsections = 0
         self.numberofstudents = 0
