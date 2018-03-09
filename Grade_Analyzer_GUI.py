@@ -108,39 +108,33 @@ class GradeAnalyzer_GUI(Frame):
         def mouseleave(event):
             self.status1.config(text=self.text)
 
+        def widget_instructions(widget, instruction):
+            widget.bind("<Enter>", lambda event, arg=instruction: mouseon(event, arg))
+            widget.bind("<Leave>", mouseleave)
+
         buttonopen = Button(self.frame0, text="Open(⌘+O)", command=self.openfromfile, highlightbackground=self.bg_toolbar,
                             width=9)
         buttonopen.pack(side=LEFT)
-        buttonopen.bind("<Enter>",
-                        lambda event, arg="Open a .csv grades file from local. ": mouseon(event, arg))
-        buttonopen.bind("<Leave>", mouseleave)
+        widget_instructions(buttonopen, "Open a .csv grades file from local. ")
 
         buttonclear = Button(self.frame0, text="Clear(⌘+C)", command=self.clearalldata, highlightbackground=self.bg_toolbar,
                              width=9)
         buttonclear.pack(side=LEFT)
-        buttonclear.bind("<Enter>",
-                        lambda event, arg="Clear all data and graph. ": mouseon(event, arg))
-        buttonclear.bind("<Leave>", mouseleave)
+        widget_instructions(buttonclear, "Clear all data and graph. ")
 
         buttonsave = Button(self.frame0, text="Save graph(⌘+S)", command=self.save_graph, highlightbackground=self.bg_toolbar,
                              width=13)
         buttonsave.pack(side=LEFT)
-        buttonsave.bind("<Enter>",
-                        lambda event, arg="Save the graph. ": mouseon(event, arg))
-        buttonsave.bind("<Leave>", mouseleave)
+        widget_instructions(buttonsave, "Save the graph. ")
 
         self.buttonshow2 = Button(self.frame0, text="Show Second Curve", command=self.showcurve_2nd,
                              highlightbackground=self.bg_toolbar, width=16)
-        self.buttonshow2.bind("<Enter>",
-                        lambda event, arg="Show the result as a second curve using twin x axis. ": mouseon(event, arg))
-        self.buttonshow2.bind("<Leave>", mouseleave)
+        widget_instructions(self.buttonshow2, "Show the result as a second curve using twin x axis. ")
 
         self.buttonshow = Button(self.frame0, text="Show Curve(⏎)", command=self.showcurve, highlightbackground=self.bg_toolbar,
                             width=14)
         self.buttonshow.pack(side=RIGHT)
-        self.buttonshow.bind("<Enter>",
-                        lambda event, arg="Show the result. ": mouseon(event, arg))
-        self.buttonshow.bind("<Leave>", mouseleave)
+        widget_instructions(self.buttonshow, "Show the result. ")
 
         self.entry_00 = Entry(self.frame0, highlightbackground=self.bg_toolbar, width=4, justify=RIGHT)
         self.entry_00.pack(side=RIGHT)
@@ -148,15 +142,11 @@ class GradeAnalyzer_GUI(Frame):
                               bg=self.bg_toolbar)
         self.Acutype.pack(side=RIGHT)
         self.Acutype.select()
-        self.Acutype.bind("<Enter>",
-                        lambda event, arg="Accumulated percentages from 0 and up. ": mouseon(event, arg))
-        self.Acutype.bind("<Leave>", mouseleave)
+        widget_instructions(self.Acutype, "Accumulated percentages from 0 and up. ")
         self.Distype = Radiobutton(self.frame0, text="Distribution", fg=self.fg, bg=self.bg_toolbar, variable=self.curvetype,
                               value=1)
         self.Distype.pack(side=RIGHT)
-        self.Distype.bind("<Enter>",
-                        lambda event, arg="Grade distributions with a few points interval. ": mouseon(event, arg))
-        self.Distype.bind("<Leave>", mouseleave)
+        widget_instructions(self.Distype, "Grade distributions with a few points interval. ")
 
         self.filepath = Label(self.frame0, text="", bg=self.bg_toolbar, fg=self.fg, width=100)
         self.filepath.pack(side=LEFT, fill=X)
@@ -282,8 +272,10 @@ class GradeAnalyzer_GUI(Frame):
 
         button34 = Button(self.frame3, text="Zoom all", command=zoomall, highlightbackground=self.bg, width=8)
         button34.grid(row=9, column=1)
+        widget_instructions(button34, "Zoom out the graph to original boundaries. ")
         button35 = Button(self.frame3, text="CUT", command=CUT, highlightbackground=self.bg, anchor=W, width=3)
         button35.grid(row=9, column=2, sticky=W)
+        widget_instructions(button35, "Trim the graph using the numbers on the left.")
 
         self.label_312 = Label(self.frame3, text='2nd X Lower Cut:', width=13, anchor=E, fg=self.fg, bg=self.bg)
         self.label_322 = Label(self.frame3, text='2nd X Higher Cut:', width=13, anchor=E, fg=self.fg, bg=self.bg)
@@ -297,10 +289,7 @@ class GradeAnalyzer_GUI(Frame):
 
         label_s1 = Label(self.frame3, text='Smoothing Factor:', width=13, anchor=E, fg=self.fg, bg=self.bg)
         label_s1.grid(row=13, column=0, columnspan=1, sticky=E)
-        label_s1.bind("<Enter>",
-                        lambda event, arg="The bigger the smoothing factor, "
-                                          "less accurate the curves are. Default is 1. ": mouseon(event, arg))
-        label_s1.bind("<Leave>", mouseleave)
+        widget_instructions(label_s1, "The bigger the smoothing factor, less accurate the curves are. Default is 1. ")
 
         self.entry_s1 = Entry(self.frame3, highlightbackground=self.bg, width=8)
         self.entry_s1.grid(row=13, column=1)
@@ -400,7 +389,6 @@ class GradeAnalyzer_GUI(Frame):
         self.addlog("Open a .csv file first, then choose the type of grades you want to add to the total.")
         self.addlog('Then choose the range of labs you want to show at the top right corner. '
                     'Click "Show curve" to show the result.')
-        self.addlog("You can use the Cut and Zoom function on the right to precisely control the x and y range. ")
         self.addlog("You can show two curves with different totals at the same time. "
                     "However, currently the relative position of the two curves are not adjustable. ")
         self.listbox.insert(END, '*' * 60)
