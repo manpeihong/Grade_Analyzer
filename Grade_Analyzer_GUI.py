@@ -101,9 +101,8 @@ class GradeAnalyzer_GUI(Frame):
         self.warningcolor2 = color_theme(self.config_theme).warningcolor2
         self.warningcolor3 = color_theme(self.config_theme).warningcolor3
 
-        self.frame0 = Frame(self, width=1000, height=20, bg=self.bg_toolbar)
-        self.frame0.pack(side=TOP, fill=X, expand=True)
-        self.frame0.pack_propagate(0)
+        self.frame0 = Frame(self, height=20, bg=self.bg_toolbar)
+        self.frame0.pack(side=TOP, fill=X, expand=1)
 
         def mouseon(event, tip):
             self.status1.config(text=tip)
@@ -203,8 +202,7 @@ class GradeAnalyzer_GUI(Frame):
             self.buttonshow.config(text='Show Curve(Enter)')
 
         self.frame3 = Frame(self, width=300, bg=self.bg)
-        self.frame3.pack(side=RIGHT, fill=BOTH, expand=True)
-        self.frame3.pack_propagate(0)
+        self.frame3.pack(side=RIGHT, fill=Y, expand=0)
 
         Label(self.frame3, text='Year:', fg=self.fg, bg=self.bg, width=13, anchor=E).grid(row=0, column=0, sticky=E)
         Label(self.frame3, text='Class:', fg=self.fg, bg=self.bg, width=13, anchor=E).grid(row=1, column=0,
@@ -324,13 +322,11 @@ class GradeAnalyzer_GUI(Frame):
         checkbutton6.grid(row=19, column=1, columnspan=2, sticky=W)
         checkbutton6.select()
 
-        self.frame2 = Frame(self, width=1000, bg=self.bg)
-        self.frame2.pack(side=BOTTOM, fill=X, expand=True)
-        self.frame2.pack_propagate(0)
+        self.frame2 = Frame(self, bg=self.bg)
+        self.frame2.pack(side=BOTTOM, fill=X, expand=1)
 
-        self.frame1 = Frame(self, width=700, bg=self.bg)
-        self.frame1.pack(side=LEFT, fill=BOTH, expand=True)
-        # self.frame1.pack_propagate(0)
+        self.frame1 = Frame(self, bg=self.bg)
+        self.frame1.pack(side=LEFT, fill=BOTH, expand=1)
 
         if _platform == "darwin" or _platform == "linux" or _platform == "linux2":
             self.gradefigure = Figure(figsize=(7, 4.7), dpi=100)
@@ -384,7 +380,7 @@ class GradeAnalyzer_GUI(Frame):
             masterroot.bind('<Control-s>', save_graph_event)
             masterroot.bind('<Control-l>', help_event)
 
-        self.pack()
+        self.pack(side=TOP, fill=BOTH, expand=1)
 
     def help(self):
         self.addlog("Grade Analyzer v. {}".format(__version__), self.warningcolor3)
