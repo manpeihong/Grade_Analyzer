@@ -140,12 +140,12 @@ class GradeAnalyzer_GUI(Frame):
 
         self.entry_00 = Entry(self.frame0, highlightbackground=self.bg_toolbar, width=4, justify=RIGHT)
         self.entry_00.pack(side=RIGHT)
-        self.Acutype = Radiobutton(self.frame0, text="Accumulation", variable=self.curvetype, value=2, fg=self.fg,
+        self.Acutype = Radiobutton(self.frame0, text="Accumulation", variable=self.curvetype, value=2, fg=self.warningcolor3,
                               bg=self.bg_toolbar)
         self.Acutype.pack(side=RIGHT)
         self.Acutype.select()
         widget_instructions(self.Acutype, "Accumulated percentages from 0 and up. ")
-        self.Distype = Radiobutton(self.frame0, text="Distribution", fg=self.fg, bg=self.bg_toolbar, variable=self.curvetype,
+        self.Distype = Radiobutton(self.frame0, text="Distribution", fg=self.warningcolor3, bg=self.bg_toolbar, variable=self.curvetype,
                               value=1)
         self.Distype.pack(side=RIGHT)
         widget_instructions(self.Distype, "Grade distributions with a few points interval. ")
@@ -334,6 +334,7 @@ class GradeAnalyzer_GUI(Frame):
             self.frame1.config(height=700)
             self.gradefigure = Figure(figsize=(7, 7), dpi=100)
         self.gradefigure.subplots_adjust(left=0.08, bottom=0.12, right=0.92, top=0.95)
+        self.gradefigure.patch.set_facecolor(self.facecolor)
         self.gradeplot = self.gradefigure.add_subplot(111)
 
         self.gradeplot.plot(self.grades, self.percentages)
@@ -342,6 +343,7 @@ class GradeAnalyzer_GUI(Frame):
         self.gradeplot.set_xlabel('Grades')
         self.gradeplot.set_ylabel('Percentage (%)')
         self.gradeplot.grid(True)
+        self.gradeplot.set_facecolor(self.facecolor)
 
         # a tk.DrawingArea
         self.canvas = FigureCanvasTkAgg(self.gradefigure, self.frame1)
