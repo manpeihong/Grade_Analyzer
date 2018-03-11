@@ -21,7 +21,7 @@ __version__ = '1.51'
 
 
 class GradeAnalyzer_GUI(Frame):
-    def __init__(self, root, masterroot, listbox, statusbar, status1, status2):
+    def __init__(self, root, masterroot, listbox, statusbar, status1, status2, configtheme):
         super().__init__(root, width=cross_platform_config.config.FRAME_WIDTH, bg='#2b2b2b')
         self.root = root
         self.masterroot = masterroot
@@ -87,9 +87,10 @@ class GradeAnalyzer_GUI(Frame):
         if _platform == "darwin":
             self.text = "Welcome to Grade Analyzer. Press ⌘ + L for help."
 
+        os.chdir(os.path.dirname(os.path.realpath(sys.argv[0])))
         self.config = configparser.ConfigParser()
         self.config.read('configuration.ini')
-        self.config_theme = self.config["Settings"]["colortheme"]
+        self.config_theme = str(configtheme.get())
 
         # Set the color scheme for the frame
         self.bg = color_theme(self.config_theme).bg
@@ -748,12 +749,17 @@ class GradeAnalyzer_GUI(Frame):
 
 
 def main():
-    os.chdir(os.path.dirname(os.path.realpath(sys.argv[0])))   # Change the working directory to current directory.
+    root = Tk()
+
+    os.chdir(os.path.dirname(os.path.realpath(sys.argv[0])))  # Change the working directory to current directory.
+
+    # Load the configuration file
     config = configparser.ConfigParser()
     config.read('configuration.ini')
     config_theme = config["Settings"]["colortheme"]
+    config_theme_var = IntVar()
+    config_theme_var.set(config["Settings"]["colortheme"])
 
-    root = Tk()
     w = cross_platform_config.config.FRAME_WIDTH  # width for the Tk root
     h = cross_platform_config.config.FRAME_HEIGHT  # height for the Tk root
     ws = root.winfo_screenwidth()  # width of the screen
@@ -803,7 +809,7 @@ def main():
     listbox.pack(side=LEFT, fill=BOTH, expand=True)
     scrollbar.config(command=listbox.yview)
 
-    GradeAnalyzer_GUI(root, root, listbox, statusbar, status1, status2)
+    GradeAnalyzer_GUI(root, root, listbox, statusbar, status1, status2, config_theme_var)
 
     listbox.delete(0, END)
     listbox.insert(END, '*' * 60)
